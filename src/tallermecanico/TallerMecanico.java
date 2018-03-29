@@ -8,6 +8,8 @@ package tallermecanico;
 import com.taller.dao.AutomovilDao;
 import com.taller.modelo.Automovil;
 import com.taller.vista.frmRegistroAutomoviles;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 
 /**
  *
@@ -18,8 +20,24 @@ public class TallerMecanico {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        // TODO code application logic here
+    public static void main(String[] args) {        
+        /*Look and Feel Nimbus de Java*/   
+         try {
+          for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+            if ("Nimbus".equals(info.getName())) {
+             UIManager.setLookAndFeel(info.getClassName());
+                        System.out.println("CHOSEN THIS");
+              break;
+         }
+         else{
+             UIManager.setLookAndFeel  ("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+          }
+        }
+        } catch (Exception e) {
+        // If Nimbus is not available, you can set to another look and feel.
+        //Cant get it to compile or work.
+
+}
         Automovil a = new Automovil();
         AutomovilDao aDao = new AutomovilDao();
         a = aDao.obtenerAutomovilById(2);

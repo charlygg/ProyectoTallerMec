@@ -12,7 +12,7 @@ package com.taller.modelo;
 public class Automovil {
     
     private int idAuto;
-    private String modelo;
+    private int modelo;
     private String marca;
     private String placas;
     private String color;
@@ -25,11 +25,11 @@ public class Automovil {
         this.idAuto = idAuto;
     }
 
-    public String getModelo() {
+    public int getModelo() {
         return modelo;
     }
 
-    public void setModelo(String modelo) {
+    public void setModelo(int modelo) {
         this.modelo = modelo;
     }
 

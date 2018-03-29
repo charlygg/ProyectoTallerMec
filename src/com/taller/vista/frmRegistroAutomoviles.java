@@ -7,6 +7,7 @@ package com.taller.vista;
 
 import com.taller.dao.AutomovilDao;
 import com.taller.modelo.Automovil;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -19,16 +20,38 @@ public class frmRegistroAutomoviles extends javax.swing.JFrame {
      */
     /* 
         Indica si esta en modo
-        1 - Nuevo registro
-        2 - Edicion de Registro        
+        1 - Modo nuevo registro
+        2 - Modo edicion registro        
     */
-    private int estadoRegistro = 1;
+    private int estadoRegistro = 0;
+    private Automovil autoActual = null;
     
     
     
     public frmRegistroAutomoviles() {
         initComponents();
     }
+    
+    private void limpiarCampos() {
+        txtModelo.setText("");
+        txtColor.setText("");
+        txtMarca.setText("");
+        txtPlacas.setText("");
+    }
+    
+    private void habilitarCampos(){
+        txtModelo.setEnabled(true);
+        txtColor.setEnabled(true);
+        txtMarca.setEnabled(true);
+        txtPlacas.setEnabled(true);
+    }
+    
+    private void deshabilitarCampos(){
+        txtModelo.setEnabled(false);
+        txtColor.setEnabled(false);
+        txtMarca.setEnabled(false);
+        txtPlacas.setEnabled(false);
+    }    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -55,6 +78,7 @@ public class frmRegistroAutomoviles extends javax.swing.JFrame {
         btnBuscar1 = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         btnNuevo = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -75,12 +99,16 @@ public class frmRegistroAutomoviles extends javax.swing.JFrame {
         jLabel4.setText("Color");
 
         txtModelo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtModelo.setEnabled(false);
 
         txtMarca.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtMarca.setEnabled(false);
 
         txtPlacas.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtPlacas.setEnabled(false);
 
         txtColor.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtColor.setEnabled(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -120,7 +148,7 @@ public class frmRegistroAutomoviles extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtColor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(142, Short.MAX_VALUE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Controles de Busqueda"));
@@ -145,9 +173,28 @@ public class frmRegistroAutomoviles extends javax.swing.JFrame {
 
         btnNuevo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnNuevo.setText("Nuevo");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
+
+        btnEditar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         btnGuardar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnGuardar.setText("Guardar");
+        btnGuardar.setEnabled(false);
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -166,9 +213,11 @@ public class frmRegistroAutomoviles extends javax.swing.JFrame {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -186,6 +235,7 @@ public class frmRegistroAutomoviles extends javax.swing.JFrame {
                     .addComponent(btnListado, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
@@ -196,9 +246,12 @@ public class frmRegistroAutomoviles extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -207,7 +260,7 @@ public class frmRegistroAutomoviles extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap(147, Short.MAX_VALUE))
         );
 
         pack();
@@ -219,10 +272,133 @@ public class frmRegistroAutomoviles extends javax.swing.JFrame {
         AutomovilDao aDao = new AutomovilDao();
         a = aDao.obtenerAutomovilById(Integer.parseInt(txtBuscar.getText()));
         
-        txtPlacas.setText(a.getPlacas());
-        txtModelo.setText(a.getModelo());
-        txtMarca.setText(a.getMarca());
+        if (a != null){
+           txtPlacas.setText(a.getPlacas());
+           txtModelo.setText(a.getModelo()+"");
+           txtMarca.setText(a.getMarca());           
+           txtColor.setText(a.getColor());
+           btnEditar.setEnabled(true);
+           autoActual = a;
+        } else {            
+            JOptionPane.showMessageDialog(rootPane, "Automovil no encontrado");
+            autoActual = null;
+            limpiarCampos();
+        }
+        
+
     }//GEN-LAST:event_btnBuscar1ActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        // TODO add your handling code here:
+        if ( txtColor.getText().equals("") && txtMarca.getText().equals("") && txtModelo.getText().equals("") && txtPlacas.getText().equals("")){
+            JOptionPane.showMessageDialog(getParent(),
+                                "No se ha registrado ningún dato para dar de alta",
+                                "Registro de Automóviles",
+                                JOptionPane.WARNING_MESSAGE);
+        } else {
+            Automovil a = new Automovil();
+            if (autoActual != null){
+                a = autoActual;
+            } else{
+                a.setIdAuto(0);
+            }
+            AutomovilDao aDao = new AutomovilDao();
+            a.setColor(txtColor.getText());
+            a.setMarca(txtMarca.getText());
+            a.setModelo(Integer.parseInt(txtModelo.getText()));
+            a.setPlacas(txtPlacas.getText());
+
+            if ( aDao.registrarOActualizarAutomovil(a) ){
+                autoActual = a;
+                deshabilitarCampos();
+                txtBuscar.setEnabled(true);
+                btnGuardar.setEnabled(false);
+                btnNuevo.setEnabled(true);
+                btnEditar.setEnabled(true);
+                btnNuevo.setText("Nuevo");
+                estadoRegistro = 0; // Sale de modo edición
+            } else{
+                
+            }
+
+            
+        }
+        
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        // TODO add your handling code here:
+        
+        //Verificar si el registro existe en BD antes de poder editar,
+        //de lo contrario se da de alta uno nuevo
+        
+        if(autoActual == null ) {
+            JOptionPane.showMessageDialog(getParent(), "No se puede actualizar un auto que no existe");
+        } else {
+        
+            if(autoActual.getIdAuto() == 0){
+                    JOptionPane.showMessageDialog(getParent(), "No se puede actualizar un auto que no existe");
+            } else {
+
+                if (estadoRegistro == 0) {
+                    estadoRegistro = 3;
+                } else{
+                    estadoRegistro = 0;
+                }
+
+                if (estadoRegistro == 3 ){
+                    habilitarCampos();
+                    txtBuscar.setEnabled(false);
+                    btnEditar.setEnabled(false);
+                    btnGuardar.setEnabled(true);  
+                    btnNuevo.setText("Cancelar");
+                } else {
+                   /* deshabilitarCampos();
+                    txtBuscar.setEnabled(true);
+                    txtBuscar.setText("");
+                    btnEditar.setEnabled(true);
+                    btnGuardar.setEnabled(false);  
+                    btnNuevo.setText("Nuevo");*/
+                }      
+            }
+        }
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        // TODO add your handling code here:
+        /* Si esta en modo nuevo cambia a modo edición (1) de lo contrario de modo edición cambia a modo nuevo (0)*/
+        if (estadoRegistro == 0) {
+            estadoRegistro = 1;
+        } else{
+            estadoRegistro = 0;
+        }
+        
+        if (estadoRegistro == 1 ){
+            habilitarCampos();
+            limpiarCampos();
+            txtBuscar.setEnabled(false);
+            txtBuscar.setText("");
+            btnEditar.setEnabled(false);
+            btnGuardar.setEnabled(true);  
+            btnNuevo.setText("Cancelar");
+        } else if (estadoRegistro == 3 ) {
+            habilitarCampos();
+            txtBuscar.setEnabled(true);
+            btnEditar.setEnabled(true);
+            btnGuardar.setEnabled(false);  
+            btnNuevo.setText("Nuevo");           
+        } else {
+            deshabilitarCampos();
+            txtBuscar.setEnabled(true);
+            txtBuscar.setText("");
+            btnEditar.setEnabled(true);
+            btnGuardar.setEnabled(false);  
+            btnNuevo.setText("Nuevo");            
+            estadoRegistro = 0;
+        }
+        
+
+    }//GEN-LAST:event_btnNuevoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -261,6 +437,7 @@ public class frmRegistroAutomoviles extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar1;
+    private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnListado;
     private javax.swing.JButton btnNuevo;
