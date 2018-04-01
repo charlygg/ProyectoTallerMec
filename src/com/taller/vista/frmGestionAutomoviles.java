@@ -7,16 +7,18 @@ package com.taller.vista;
 
 import com.taller.dao.AutomovilDao;
 import com.taller.modelo.Automovil;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author Usuario
  */
-public class frmRegistroAutomoviles extends javax.swing.JFrame {
+public class frmGestionAutomoviles extends javax.swing.JFrame {
 
     /**
-     * Creates new form frmRegistroAutomoviles
+     * Creates new form frmGestionAutomoviles
      */
     /* 
         Indica si esta en modo
@@ -28,7 +30,7 @@ public class frmRegistroAutomoviles extends javax.swing.JFrame {
     
     
     
-    public frmRegistroAutomoviles() {
+    public frmGestionAutomoviles() {
         initComponents();
     }
     
@@ -51,7 +53,26 @@ public class frmRegistroAutomoviles extends javax.swing.JFrame {
         txtColor.setEnabled(false);
         txtMarca.setEnabled(false);
         txtPlacas.setEnabled(false);
-    }    
+    }  
+    
+    private void buscarAutomovil(){
+        Automovil a = new Automovil();
+        AutomovilDao aDao = new AutomovilDao();
+        a = aDao.obtenerAutomovilById(Integer.parseInt(txtBuscar.getText()));
+        
+        if (a != null){
+           txtPlacas.setText(a.getPlacas());
+           txtModelo.setText(a.getModelo()+"");
+           txtMarca.setText(a.getMarca());           
+           txtColor.setText(a.getColor());
+           btnEditar.setEnabled(true);
+           autoActual = a;
+        } else {            
+            JOptionPane.showMessageDialog(rootPane, "Automovil no encontrado");
+            autoActual = null;
+            limpiarCampos();
+        }       
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -81,7 +102,7 @@ public class frmRegistroAutomoviles extends javax.swing.JFrame {
         btnEditar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Gestión de Automóviles");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos del Vehículo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
@@ -160,6 +181,11 @@ public class frmRegistroAutomoviles extends javax.swing.JFrame {
 
         btnListado.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnListado.setText("Listado");
+        btnListado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnListadoActionPerformed(evt);
+            }
+        });
 
         btnBuscar1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnBuscar1.setText("Buscar");
@@ -246,12 +272,9 @@ public class frmRegistroAutomoviles extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -260,7 +283,7 @@ public class frmRegistroAutomoviles extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(147, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -268,24 +291,24 @@ public class frmRegistroAutomoviles extends javax.swing.JFrame {
 
     private void btnBuscar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscar1ActionPerformed
         // TODO add your handling code here:
-        Automovil a = new Automovil();
-        AutomovilDao aDao = new AutomovilDao();
-        a = aDao.obtenerAutomovilById(Integer.parseInt(txtBuscar.getText()));
         
-        if (a != null){
-           txtPlacas.setText(a.getPlacas());
-           txtModelo.setText(a.getModelo()+"");
-           txtMarca.setText(a.getMarca());           
-           txtColor.setText(a.getColor());
-           btnEditar.setEnabled(true);
-           autoActual = a;
-        } else {            
-            JOptionPane.showMessageDialog(rootPane, "Automovil no encontrado");
-            autoActual = null;
-            limpiarCampos();
-        }
-        
-
+        buscarAutomovil();
+//        Automovil a = new Automovil();
+//        AutomovilDao aDao = new AutomovilDao();
+//        a = aDao.obtenerAutomovilById(Integer.parseInt(txtBuscar.getText()));
+//        
+//        if (a != null){
+//           txtPlacas.setText(a.getPlacas());
+//           txtModelo.setText(a.getModelo()+"");
+//           txtMarca.setText(a.getMarca());           
+//           txtColor.setText(a.getColor());
+//           btnEditar.setEnabled(true);
+//           autoActual = a;
+//        } else {            
+//            JOptionPane.showMessageDialog(rootPane, "Automovil no encontrado");
+//            autoActual = null;
+//            limpiarCampos();
+//        }        
     }//GEN-LAST:event_btnBuscar1ActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
@@ -400,6 +423,30 @@ public class frmRegistroAutomoviles extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnNuevoActionPerformed
 
+    private void btnListadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListadoActionPerformed
+        // TODO add your handling code here:
+        
+        diagRegistroAutomovilesLista l = new diagRegistroAutomovilesLista(this, true);                 
+        l.btnSeleccionar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {                
+                System.out.println("Id Auto Seleccionado: " + l.obtenerIdAutoSeleccionado());
+                if (l.obtenerIdAutoSeleccionado() == 0){
+                    JOptionPane.showMessageDialog(getParent(),
+                                "No se ha seleccionado ningun automovil de la lista",
+                                "Registro de Automóviles",
+                                JOptionPane.WARNING_MESSAGE);
+                } else {
+                    txtBuscar.setText(l.obtenerIdAutoSeleccionado()+"");
+                    buscarAutomovil();
+                    l.dispose();
+                }
+            }
+        });
+        
+        l.setVisible(true);                
+    }//GEN-LAST:event_btnListadoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -417,20 +464,21 @@ public class frmRegistroAutomoviles extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmRegistroAutomoviles.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmGestionAutomoviles.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmRegistroAutomoviles.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmGestionAutomoviles.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmRegistroAutomoviles.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmGestionAutomoviles.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmRegistroAutomoviles.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmGestionAutomoviles.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmRegistroAutomoviles().setVisible(true);
+                new frmGestionAutomoviles().setVisible(true);
             }
         });
     }
@@ -455,4 +503,14 @@ public class frmRegistroAutomoviles extends javax.swing.JFrame {
     private javax.swing.JTextField txtModelo;
     private javax.swing.JTextField txtPlacas;
     // End of variables declaration//GEN-END:variables
+
+    public void actionPerformed(ActionEvent e) {
+        String command = e.getActionCommand();
+        //Comprobar que el boton sea el del listado de Automoviles
+        if(e.getActionCommand() == "Seleccionar"){
+            System.out.println("Traer automovil");
+
+        }
+        
+    }
 }

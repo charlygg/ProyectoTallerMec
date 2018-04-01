@@ -5,6 +5,13 @@
  */
 package com.taller.vista;
 
+import com.taller.dao.AutomovilDao;
+import com.taller.modelo.Automovil;
+import java.awt.List;
+import java.util.ArrayList;
+import java.util.Vector;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Usuario
@@ -16,15 +23,44 @@ public class diagRegistroAutomovilesLista extends javax.swing.JDialog {
      */
     
     String columnas [] = {"Id","Modelo","Marca","Placas","Color"};
+    DefaultTableModel tableModel;
+    frmGestionAutomoviles frm;
+    
+    public int obtenerIdAutoSeleccionado(){
+        int fila = tableAutos.getSelectedRow();  
+        int idAuto = 0;
+        try{
+            idAuto = (int) tableModel.getValueAt(fila, 0);
+        }catch(ArrayIndexOutOfBoundsException ex){
+            System.out.println("Error: " + ex.getMessage());
+        }
+        return idAuto;
+    }
     
     
     public diagRegistroAutomovilesLista(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
-        
-        
+        super(parent, modal);        
+        AutomovilDao dat = new AutomovilDao();
+        tableModel = new DefaultTableModel(columnas, 0);
+        ArrayList<Automovil> listadoAutos = new ArrayList<Automovil>();
+        listadoAutos = dat.obtenerAllAutomoviles();            
+        frm = (frmGestionAutomoviles) parent;
 
-        initComponents();             
+        for(Automovil auto : listadoAutos){
+            Vector fila = new Vector();
+            fila.add(auto.getIdAuto());
+            fila.add(auto.getModelo());
+            fila.add(auto.getMarca());
+            fila.add(auto.getPlacas());
+            fila.add(auto.getColor());
+            tableModel.addRow(fila);
+        }        
         
+        initComponents();           
+        
+        tableAutos.getColumnModel().getColumn(0).setWidth(0);
+        tableAutos.getColumnModel().getColumn(0).setMinWidth(0);
+        tableAutos.getColumnModel().getColumn(0).setMaxWidth(0);
     }
 
     /**
@@ -38,39 +74,72 @@ public class diagRegistroAutomovilesLista extends javax.swing.JDialog {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tableAutos = new javax.swing.JTable();
+        btnSeleccionar = new javax.swing.JButton();
+        btnCerrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Listado de automoviles");
 
-        tableAutos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {},
-                {},
-                {},
-                {}
-            },
-            columnas
-        ));
+        tableAutos.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        tableAutos.setModel(tableModel
+            /*new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+                    {},
+                    {},
+                    {},
+                    {}
+                },
+                columnas
+            )*/
+        );
         jScrollPane1.setViewportView(tableAutos);
+
+        btnSeleccionar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnSeleccionar.setText("Seleccionar");
+
+        btnCerrar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnCerrar.setText("Cerrar");
+        btnCerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCerrarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 799, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnSeleccionar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 799, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(32, 32, 32)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSeleccionar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btnCerrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -115,6 +184,8 @@ public class diagRegistroAutomovilesLista extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JButton btnCerrar;
+    public javax.swing.JButton btnSeleccionar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tableAutos;
     // End of variables declaration//GEN-END:variables

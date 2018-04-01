@@ -7,7 +7,8 @@ package tallermecanico;
 
 import com.taller.dao.AutomovilDao;
 import com.taller.modelo.Automovil;
-import com.taller.vista.frmRegistroAutomoviles;
+import com.taller.vista.frmGestionAutomoviles;
+import com.taller.vista.frmTallerMecanico;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
@@ -38,17 +39,20 @@ public class TallerMecanico {
         //Cant get it to compile or work.
 
 }
-        Automovil a = new Automovil();
-        AutomovilDao aDao = new AutomovilDao();
-        a = aDao.obtenerAutomovilById(2);
-        if (a==null){
-            System.out.println("Automovil no encontrado");
-        } else {
-            System.out.println(a.toString());
-        }
-        
-        frmRegistroAutomoviles f = new frmRegistroAutomoviles();
-        f.setVisible(true);
+//        Automovil a = new Automovil();
+//        AutomovilDao aDao = new AutomovilDao();
+//        a = aDao.obtenerAutomovilById(2);
+//        if (a==null){
+//            System.out.println("Automovil no encontrado");
+//        } else {
+//            System.out.println(a.toString());
+//        }
+//        
+//        frmGestionAutomoviles f = new frmGestionAutomoviles();
+//        f.setVisible(true);
+
+          frmTallerMecanico t = new frmTallerMecanico();
+          t.setVisible(true);
     }
     
 }

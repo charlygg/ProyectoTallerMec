@@ -11,6 +11,7 @@ import com.taller.modelo.Automovil;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -44,6 +45,52 @@ public class AutomovilDao extends ConexionMySQL{
             call.close();
             
             return automovil;
+            
+        }catch(SQLException ex){
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+            
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        finally {
+            try {
+                cerrar();
+            } catch (SQLException ex) {
+                ex.printStackTrace();  
+                JOptionPane.showMessageDialog(null, ex.getMessage());
+            }
+        }
+        return null;
+    }
+    /* Metodo que regresa todos los automoviles registrados de la BD*/
+    
+    public ArrayList<Automovil> obtenerAllAutomoviles(){  
+        
+        ArrayList<Automovil> a = new ArrayList<Automovil>();
+        
+        try{
+            Connection cn = conectar();
+            CallableStatement call = (CallableStatement) cn.prepareCall("{call obtener_autos}");
+            
+            ResultSet res = call.executeQuery();
+            
+            while(res.next()){
+                automovil = new Automovil();
+                automovil.setIdAuto(res.getInt("id_auto"));
+                automovil.setModelo(res.getInt("modelo"));
+                automovil.setMarca(res.getString("marca"));
+                automovil.setPlacas(res.getString("placas"));
+                automovil.setColor(res.getString("color"));
+                a.add(automovil);
+            }
+            
+            cn.close();
+            res.close();
+            call.close();
+            
+            return a;
             
         }catch(SQLException ex){
             ex.printStackTrace();
