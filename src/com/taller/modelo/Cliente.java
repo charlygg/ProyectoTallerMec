@@ -17,6 +17,13 @@ public class Cliente {
     private String apellidoMaterno;
     private int edad;
     private String email;
+    private String activo;
+    private String calle;
+    private String numeroExterior;
+    private String numeroInterior;
+    private int codigoPostal;
+    private String estado;
+    private String telefono;
 
     public Cliente() {
     }
@@ -68,6 +75,64 @@ public class Cliente {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getActivo() {
+        return activo;
+    }
+
+    public void setActivo(String activo) {
+        this.activo = activo;
+    }
+
+    public String getCalle() {
+        return calle;
+    }
+
+    public void setCalle(String calle) {
+        this.calle = calle;
+    }
+
+    public String getNumeroExterior() {
+        return numeroExterior;
+    }
+
+    public void setNumeroExterior(String numeroExterior) {
+        this.numeroExterior = numeroExterior;
+    }
+
+    public String getNumeroInterior() {
+        return numeroInterior;
+    }
+
+    public void setNumeroInterior(String numeroInterior) {
+        this.numeroInterior = numeroInterior;
+    }
+
+    public int getCodigoPostal() {
+        return codigoPostal;
+    }
+
+    public void setCodigoPostal(int codigoPostal) {
+        this.codigoPostal = codigoPostal;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+    
+    
 
     @Override
     public String toString() {

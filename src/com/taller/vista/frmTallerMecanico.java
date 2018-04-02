@@ -5,9 +5,11 @@
  */
 package com.taller.vista;
 
+import java.awt.Color;
+
 /**
  *
- * @author Usuario
+ * @author Carlos G. G.
  */
 public class frmTallerMecanico extends javax.swing.JFrame {
 
@@ -16,6 +18,7 @@ public class frmTallerMecanico extends javax.swing.JFrame {
      */
     public frmTallerMecanico() {
         initComponents();
+        getContentPane().setBackground(Color.WHITE);
     }
 
     /**
