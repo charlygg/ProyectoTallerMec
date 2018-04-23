@@ -26,7 +26,7 @@ public class TallerMecanico {
          try {
           for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
             if ("Nimbus".equals(info.getName())) {
-             UIManager.setLookAndFeel(info.getClassName());
+            // UIManager.setLookAndFeel(info.getClassName());
                         System.out.println("CHOSEN THIS");
               break;
          }
@@ -39,18 +39,6 @@ public class TallerMecanico {
         //Cant get it to compile or work.
 
 }
-//        Automovil a = new Automovil();
-//        AutomovilDao aDao = new AutomovilDao();
-//        a = aDao.obtenerAutomovilById(2);
-//        if (a==null){
-//            System.out.println("Automovil no encontrado");
-//        } else {
-//            System.out.println(a.toString());
-//        }
-//        
-//        frmGestionAutomoviles f = new frmGestionAutomoviles();
-//        f.setVisible(true);
-
           frmTallerMecanico t = new frmTallerMecanico();
           t.setVisible(true);
     }

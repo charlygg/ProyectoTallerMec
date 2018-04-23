@@ -12,10 +12,9 @@ package com.taller.modelo;
 public class Cliente {
     
     private int idCliente;
-    private String nombre;
-    private String apellidoPaterno;
-    private String apellidoMaterno;
-    private int edad;
+    private String nombreCompleto;
+    private String compania;
+    private String rfc;
     private String email;
     private String activo;
     private String calle;
@@ -24,9 +23,30 @@ public class Cliente {
     private int codigoPostal;
     private String estado;
     private String telefono;
+    private String ciudad;
+    private String fax;
 
     public Cliente() {
     }
+
+    public Cliente(int idCliente, String nombreCompleto, String compania, String rfc, String email, String activo, String calle, String numeroExterior, String numeroInterior, int codigoPostal, String estado, String telefono, String ciudad, String fax) {
+        this.idCliente = idCliente;
+        this.nombreCompleto = nombreCompleto;
+        this.compania = compania;
+        this.rfc = rfc;
+        this.email = email;
+        this.activo = activo;
+        this.calle = calle;
+        this.numeroExterior = numeroExterior;
+        this.numeroInterior = numeroInterior;
+        this.codigoPostal = codigoPostal;
+        this.estado = estado;
+        this.telefono = telefono;
+        this.ciudad = ciudad;
+        this.fax = fax;
+    }
+    
+    
 
     public int getIdCliente() {
         return idCliente;
@@ -36,38 +56,46 @@ public class Cliente {
         this.idCliente = idCliente;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getNombreCompleto() {
+        return nombreCompleto;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombreCompleto(String nombreCompleto) {
+        this.nombreCompleto = nombreCompleto;
     }
 
-    public String getApellidoPaterno() {
-        return apellidoPaterno;
+    public String getCompania() {
+        return compania;
     }
 
-    public void setApellidoPaterno(String apellidoPaterno) {
-        this.apellidoPaterno = apellidoPaterno;
+    public void setCompania(String compania) {
+        this.compania = compania;
     }
 
-    public String getApellidoMaterno() {
-        return apellidoMaterno;
+    public String getRfc() {
+        return rfc;
     }
 
-    public void setApellidoMaterno(String apellidoMaterno) {
-        this.apellidoMaterno = apellidoMaterno;
+    public void setRfc(String rfc) {
+        this.rfc = rfc;
     }
 
-    public int getEdad() {
-        return edad;
+    public String getCiudad() {
+        return ciudad;
     }
 
-    public void setEdad(int edad) {
-        this.edad = edad;
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
     }
 
+    public String getFax() {
+        return fax;
+    }
+
+    public void setFax(String fax) {
+        this.fax = fax;
+    }
+    
     public String getEmail() {
         return email;
     }
@@ -131,8 +159,6 @@ public class Cliente {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
-    
-    
 
     @Override
     public String toString() {

@@ -34,10 +34,15 @@ public class AutomovilDao extends ConexionMySQL{
             while(res.next()){
                 automovil = new Automovil();
                 automovil.setIdAuto(res.getInt("id_auto"));
-                automovil.setModelo(res.getInt("modelo"));
+                automovil.setModelo(res.getString("modelo"));
                 automovil.setMarca(res.getString("marca"));
                 automovil.setPlacas(res.getString("placas"));
                 automovil.setColor(res.getString("color"));
+                automovil.setLinea(res.getString("linea"));
+                automovil.setAnio(res.getInt("anio"));
+                automovil.setKilometraje(res.getInt("kilometraje"));
+                automovil.setSerie(res.getString("serie"));
+                automovil.setIdCliente(res.getInt("id_cliente"));                
             }
             
             cn.close();
@@ -66,23 +71,80 @@ public class AutomovilDao extends ConexionMySQL{
     }
     /* Metodo que regresa todos los automoviles registrados de la BD*/
     
-    public ArrayList<Automovil> obtenerAllAutomoviles(){  
+    public ArrayList<Automovil> obtenerAutomovovilesFromClienteId(int id_cliente){  
         
         ArrayList<Automovil> a = new ArrayList<Automovil>();
         
         try{
             Connection cn = conectar();
-            CallableStatement call = (CallableStatement) cn.prepareCall("{call obtener_autos}");
+            CallableStatement call = (CallableStatement) cn.prepareCall("{call obtener_autos_from_cliente(?)}");
+            call.setInt(1, id_cliente);
             
             ResultSet res = call.executeQuery();
             
             while(res.next()){
                 automovil = new Automovil();
                 automovil.setIdAuto(res.getInt("id_auto"));
-                automovil.setModelo(res.getInt("modelo"));
+                automovil.setModelo(res.getString("modelo"));
                 automovil.setMarca(res.getString("marca"));
                 automovil.setPlacas(res.getString("placas"));
                 automovil.setColor(res.getString("color"));
+                automovil.setLinea(res.getString("linea"));
+                automovil.setAnio(res.getInt("anio"));
+                automovil.setKilometraje(res.getInt("kilometraje"));
+                automovil.setSerie(res.getString("serie"));
+                automovil.setIdCliente(res.getInt("id_cliente"));   
+                a.add(automovil);
+            }
+            
+            cn.close();
+            res.close();
+            call.close();
+            
+            return a;
+            
+        }catch(SQLException ex){
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+            
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        finally {
+            try {
+                cerrar();
+            } catch (SQLException ex) {
+                ex.printStackTrace();  
+                JOptionPane.showMessageDialog(null, ex.getMessage());
+            }
+        }
+        return null;
+    }
+    
+    public ArrayList<Automovil> obtenerAllAutomoviles(){  
+        
+        ArrayList<Automovil> a = new ArrayList<Automovil>();
+        
+        try{
+            Connection cn = conectar();
+            CallableStatement call = (CallableStatement) cn.prepareCall("{call obtener_autos_from_cliente(?)}");
+            call.setInt(1, -2); //Traer todos los automóviles
+            
+            ResultSet res = call.executeQuery();
+            
+            while(res.next()){
+                automovil = new Automovil();
+                automovil.setIdAuto(res.getInt("id_auto"));
+                automovil.setModelo(res.getString("modelo"));
+                automovil.setMarca(res.getString("marca"));
+                automovil.setPlacas(res.getString("placas"));
+                automovil.setColor(res.getString("color"));
+                automovil.setLinea(res.getString("linea"));
+                automovil.setAnio(res.getInt("anio"));
+                automovil.setKilometraje(res.getInt("kilometraje"));
+                automovil.setSerie(res.getString("serie"));
+                automovil.setIdCliente(res.getInt("id_cliente"));   
                 a.add(automovil);
             }
             
@@ -112,16 +174,70 @@ public class AutomovilDao extends ConexionMySQL{
     }
     
     /* El método registra un nuevo auto si tiene id = 0 o lo actualiza si tiene un id existente de un auto */
-    public boolean registrarOActualizarAutomovil(Automovil a){
+    public Automovil registrarAutomovil(Automovil a){
+        try{
+            Connection cn = conectar();
+            CallableStatement call = (CallableStatement) cn.prepareCall("{call agregar_modificar_auto(?,?,?,?,?,?,?,?,?,?)}");
+            call.setInt(1, a.getIdAuto());
+            call.setString(2, a.getModelo());
+            call.setString(3, a.getMarca());
+            call.setString(4, a.getLinea());
+            call.setInt(5, a.getAnio());
+            call.setString(6, a.getSerie());
+            call.setString(7, a.getColor());
+            call.setString(8, a.getPlacas());
+            call.setInt(9, a.getKilometraje());
+            call.setInt(10, a.getIdCliente());            
+            
+            ResultSet res = call.executeQuery();
+            
+            if(res.next()){
+                a.setIdAuto(res.getInt(3));
+                String mensaje = res.getString("mensaje");
+                System.out.println(mensaje);
+                JOptionPane.showMessageDialog(null, mensaje);
+            } else {
+            }
+            
+            cn.close();
+            res.close();
+            call.close();
+            
+            return a;
+            
+        }catch(SQLException ex){
+            ex.printStackTrace();
+            
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            try {
+                cerrar();
+            } catch (SQLException ex) {
+                ex.printStackTrace();                
+            }
+        }        
+        return a;
+    }
+    
+    
+    /* El método registra un nuevo auto si tiene id = 0 o lo actualiza si tiene un id existente de un auto */
+    public boolean actualizarAutomovil(Automovil a){
         boolean actualizacion = false;
         try{
             Connection cn = conectar();
-            CallableStatement call = (CallableStatement) cn.prepareCall("{call agregar_modificar_auto(?,?,?,?,?)}");
+            CallableStatement call = (CallableStatement) cn.prepareCall("{call agregar_modificar_auto(?,?,?,?,?,?,?,?,?,?)}");
             call.setInt(1, a.getIdAuto());
-            call.setInt(2, a.getModelo());
+            call.setString(2, a.getModelo());
             call.setString(3, a.getMarca());
-            call.setString(4, a.getPlacas());
-            call.setString(5, a.getColor());
+            call.setString(4, a.getLinea());
+            call.setInt(5, a.getAnio());
+            call.setString(6, a.getSerie());
+            call.setString(7, a.getColor());
+            call.setString(8, a.getPlacas());
+            call.setInt(9, a.getKilometraje());
+            call.setInt(10, a.getIdCliente());            
             
             ResultSet res = call.executeQuery();
             
