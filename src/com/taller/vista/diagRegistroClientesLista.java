@@ -27,6 +27,7 @@ public class diagRegistroClientesLista extends javax.swing.JDialog {
     String columnas [] = {"Id","Nombre Completo","Compañía","RFC"};
     DefaultTableModel tableModel;
     frmGestionClientes frm;
+    frmOrdenTrabajo frmO;
     
     public int obtenerClienteSeleccionado(){
         int fila = tableAutos.getSelectedRow();  
@@ -45,9 +46,14 @@ public class diagRegistroClientesLista extends javax.swing.JDialog {
         ClienteDao dat = new ClienteDao();
         tableModel = new DefaultTableModel(columnas, 0);
         ArrayList<Cliente> listadoClientes = new ArrayList<Cliente>();
-        listadoClientes = dat.obtenerAllClientes();            
-        frm = (frmGestionClientes) parent;
-
+        listadoClientes = dat.obtenerAllClientes();  
+        
+        if(parent instanceof frmOrdenTrabajo) {
+            frmO =  (frmOrdenTrabajo) parent;
+        } else if(parent instanceof frmGestionClientes){
+            frm =  (frmGestionClientes) parent;
+        }
+        
         for(Cliente c : listadoClientes){
             Vector fila = new Vector();
             fila.add(c.getIdCliente());

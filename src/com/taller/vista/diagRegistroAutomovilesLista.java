@@ -25,6 +25,8 @@ public class diagRegistroAutomovilesLista extends javax.swing.JDialog {
     String columnas [] = {"Id","Modelo","Marca","Placas","Color"};
     DefaultTableModel tableModel;
     frmGestionAutomoviles frm;
+    frmOrdenTrabajo frmO;
+    private int idCliente;
     
     public int obtenerIdAutoSeleccionado(){
         int fila = tableAutos.getSelectedRow();  
@@ -36,15 +38,39 @@ public class diagRegistroAutomovilesLista extends javax.swing.JDialog {
         }
         return idAuto;
     }
-    
+
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
+        AutomovilDao dat = new AutomovilDao();
+        ArrayList<Automovil> listadoAutos = new ArrayList<Automovil>();
+        listadoAutos = dat.obtenerAutomovovilesFromClienteId(idCliente);
+        for(Automovil auto : listadoAutos){
+            Vector fila = new Vector();
+            fila.add(auto.getIdAuto());
+            fila.add(auto.getModelo());
+            fila.add(auto.getMarca());
+            fila.add(auto.getPlacas());
+            fila.add(auto.getColor());
+            tableModel.addRow(fila);
+        }    
+        tableAutos.getColumnModel().getColumn(0).setWidth(0);
+        tableAutos.getColumnModel().getColumn(0).setMinWidth(0);
+        tableAutos.getColumnModel().getColumn(0).setMaxWidth(0);
+    }       
     
     public diagRegistroAutomovilesLista(java.awt.Frame parent, boolean modal) {
         super(parent, modal);        
         AutomovilDao dat = new AutomovilDao();
         tableModel = new DefaultTableModel(columnas, 0);
         ArrayList<Automovil> listadoAutos = new ArrayList<Automovil>();
-        listadoAutos = dat.obtenerAllAutomoviles();            
-        frm = (frmGestionAutomoviles) parent;
+         
+        if(parent instanceof frmGestionAutomoviles){
+            frm = (frmGestionAutomoviles) parent;
+            listadoAutos = dat.obtenerAllAutomoviles(); 
+        } else if (parent instanceof frmOrdenTrabajo){
+            frmO = (frmOrdenTrabajo) parent;            
+        }
+        
 
         for(Automovil auto : listadoAutos){
             Vector fila = new Vector();

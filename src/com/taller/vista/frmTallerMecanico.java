@@ -45,6 +45,7 @@ public class frmTallerMecanico extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/taller/img/mecanica.png"))); // NOI18N
 
         btnAdministracionClientes.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        btnAdministracionClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/taller/img/z_users.png"))); // NOI18N
         btnAdministracionClientes.setText("CLIENTES");
         btnAdministracionClientes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -52,8 +53,9 @@ public class frmTallerMecanico extends javax.swing.JFrame {
             }
         });
 
-        btnOrdenesDeTrabajo.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        btnOrdenesDeTrabajo.setText("ORDENES DE TRABAJO");
+        btnOrdenesDeTrabajo.setFont(new java.awt.Font("Tahoma", 0, 21)); // NOI18N
+        btnOrdenesDeTrabajo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/taller/img/z_todo.png"))); // NOI18N
+        btnOrdenesDeTrabajo.setText("ORDEN DE TRABAJO");
         btnOrdenesDeTrabajo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnOrdenesDeTrabajoActionPerformed(evt);
@@ -61,6 +63,7 @@ public class frmTallerMecanico extends javax.swing.JFrame {
         });
 
         btnAutomoviles.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        btnAutomoviles.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/taller/img/z_cars.png"))); // NOI18N
         btnAutomoviles.setText("AUTOMOVILES");
         btnAutomoviles.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -69,6 +72,7 @@ public class frmTallerMecanico extends javax.swing.JFrame {
         });
 
         btnSalir.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/taller/img/z_exit.png"))); // NOI18N
         btnSalir.setText("SALIR");
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -77,6 +81,7 @@ public class frmTallerMecanico extends javax.swing.JFrame {
         });
 
         btnEmpleados.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        btnEmpleados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/taller/img/z_worker.png"))); // NOI18N
         btnEmpleados.setText("EMPLEADOS");
         btnEmpleados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -85,6 +90,7 @@ public class frmTallerMecanico extends javax.swing.JFrame {
         });
 
         btnUsuarios.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        btnUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/taller/img/z_admin.png"))); // NOI18N
         btnUsuarios.setText("USUARIOS");
         btnUsuarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -109,10 +115,10 @@ public class frmTallerMecanico extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(btnUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAutomoviles, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(btnOrdenesDeTrabajo, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnOrdenesDeTrabajo)
+                    .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(58, 58, 58))
         );
         layout.setVerticalGroup(
@@ -156,14 +162,19 @@ public class frmTallerMecanico extends javax.swing.JFrame {
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         // TODO add your handling code here:
+        System.exit(0);
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmpleadosActionPerformed
         // TODO add your handling code here:
+        frmEmpleado fe = new frmEmpleado();
+        fe.setVisible(true);
     }//GEN-LAST:event_btnEmpleadosActionPerformed
 
     private void btnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuariosActionPerformed
         // TODO add your handling code here:
+        frmUsuario u = new frmUsuario();
+        u.setVisible(true);
     }//GEN-LAST:event_btnUsuariosActionPerformed
 
     /**
