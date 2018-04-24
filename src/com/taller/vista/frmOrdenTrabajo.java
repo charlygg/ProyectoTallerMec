@@ -23,11 +23,26 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.swing.JRViewer;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -1200,7 +1215,84 @@ public class frmOrdenTrabajo extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFinalizarActionPerformed
 
     private void btnVistaPreliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVistaPreliminarActionPerformed
-        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            // Compile jrxml file.
+            JasperReport jasperReport = JasperCompileManager 
+                    .compileReport("vista_previa.jrxml");
+            
+             // Parameters for report
+            List<Map<String,?>> dataSourceReport = new ArrayList<Map<String,?>>();
+            Map<String, Object> m = new HashMap<String, Object>();
+            
+            
+            OrdenTrabajoDetalle det = new OrdenTrabajoDetalle();
+            OrdenTrabajoDetalleDao dDao = new OrdenTrabajoDetalleDao();
+           
+            Cliente c;
+            ClienteDao cDao = new ClienteDao();
+            
+            Automovil a = null;
+            AutomovilDao aDao = new AutomovilDao();
+            
+            Empleado e = null;
+            EmpleadoDao empDao = new EmpleadoDao();
+            
+            a = aDao.obtenerAutomovilById(ordenTrabajoActual.getIdAuto());
+            c = cDao.obtenerClienteById(ordenTrabajoActual.getIdCliente());
+            e = empDao.obtenerEmpleadoById(ordenTrabajoActual.getIdEmpleadoAsignado());
+            
+            for(OrdenTrabajoDetalle d : dDao.obtenerDetalleFromOrdenId(ordenTrabajoActual.getIdOrdenTrabajo())){
+                Map<String, Object> m2 = new HashMap<String, Object>();
+                
+                CatalogoServicio cat;
+                CatalogoServicioDao catDao = new CatalogoServicioDao();
+                cat = catDao.obtenerServicioById(d.getIdCatalogoServicio());
+                // Detalle de Servicios
+                m2.put("serv_descripcion", cat.getNombre());
+                m2.put("serv_detalle", cat.getDetalle());
+                m2.put("serv_precio", cat.getPrecio());
+                
+                //Cliente 
+                m2.put("txt_no_orden", ordenTrabajoActual.getIdOrdenTrabajo() +"");
+                m2.put("txt_estado", txtEstado.getText()+"");
+                
+                m2.put("cli_nombre_completo", c.getNombreCompleto());
+                m2.put("cli_cia", c.getCompania());
+                m2.put("cli_calle", c.getCalle());
+                m2.put("cli_num_ext", c.getNumeroExterior());
+                m2.put("cli_num_int", c.getNumeroInterior());
+                m2.put("cli_ciudad", c.getCiudad());
+                
+                //Automovil
+                m2.put("v_modelo", a.getModelo());
+                m2.put("v_marca", a.getMarca());
+                m2.put("v_linea", a.getLinea());
+                m2.put("v_anio", a.getAnio());
+                m2.put("v_color", a.getColor());
+                m2.put("v_km", a.getKilometraje());
+                m2.put("v_placas", a.getPlacas());
+                
+                //Empleado
+                m2.put("emp_nombre", e.getNombre() + " " + e.getApePat() + " " + e.getApeMat());
+                
+                dataSourceReport.add(m2);
+            }
+            
+            //dataSourceReport.add(m);
+            //
+            JRDataSource dataSource = new JRBeanCollectionDataSource(dataSourceReport);
+            
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, dataSource);
+            
+            JasperViewer viewer = new JasperViewer(jasperPrint, false);
+            viewer.setTitle("ORDEN DE SERVICIO");
+            viewer.setVisible(true);
+            
+            
+        } catch (JRException ex) {
+            Logger.getLogger(frmOrdenTrabajo.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnVistaPreliminarActionPerformed
 
     private void btnProcesarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcesarActionPerformed
