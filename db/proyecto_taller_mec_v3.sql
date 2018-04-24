@@ -47,7 +47,7 @@ CREATE TABLE `tbl_auto` (
 
 LOCK TABLES `tbl_auto` WRITE;
 /*!40000 ALTER TABLE `tbl_auto` DISABLE KEYS */;
-INSERT INTO `tbl_auto` VALUES (2,'Chico','Sedan','Nissan',2015,'Rojo','ZDR-24-34',30000,'1929D-W',-1),(3,'Chico','Sedan','Nissan',2015,'Rojo','ZDR-24-34',30000,'1929D-W',2),(4,'Grande','Sedan','Nissan',2020,'Rojo','123-1D2',30000,'1929D-W',3),(5,'Grande','Sedan','Nissan',2018,'Rojo','ZDR-24-34',30000,'1929D-W',4),(6,'Grande','Sedan','Nissan',2018,'Rojo','ZDR-24-34',30000,'1929D-W',3),(7,'Pequeño','Camioneta','Nissan',2018,'Verde','ZDR-24-34',30000,'1929D-W',5),(8,'SENTRA','MARCH','Nissan',2018,'Turquesa','ABC-123',8909,'1929D-W',5);
+INSERT INTO `tbl_auto` VALUES (2,'Chico','Sedan','Nissan',2015,'Rojo','ZDR-24-34',30000,'1929D-W',6),(3,'Chico','Sedan','Nissan',2015,'Rojo','ZDR-24-34',30000,'1929D-W',2),(4,'Grande','Sedan','Nissan',2020,'Rojo','123-1D2',30000,'1929D-W',3),(5,'Grande','Sedan','Nissan',2018,'Rojo','ZDR-24-34',30000,'1929D-W',-1),(6,'Grande','Sedan','Nissan',2018,'Rojo','ZDR-24-34',30000,'1929D-W',3),(7,'Pequeño','Camioneta','Nissan',2018,'Verde','ZDR-24-34',30000,'1929D-W',5),(8,'SENTRA','MARCH','Nissan',2018,'Turquesa','ABC-123',8909,'1929D-W',5);
 /*!40000 ALTER TABLE `tbl_auto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -74,7 +74,7 @@ CREATE TABLE `tbl_catalogo_servicios` (
 
 LOCK TABLES `tbl_catalogo_servicios` WRITE;
 /*!40000 ALTER TABLE `tbl_catalogo_servicios` DISABLE KEYS */;
-INSERT INTO `tbl_catalogo_servicios` VALUES (1,'Lavado de Motor','Se aplica una revisión minuciosa al motor y s','Y',2500),(2,'Ajuste de la velocidad y mezcla de ralentí','','1',450),(3,'Limpieza de carburador','','1',500);
+INSERT INTO `tbl_catalogo_servicios` VALUES (1,'Lavado de Motor','Se aplica una revisión minuciosa al motor y s','Y',2500),(2,'Lavado de carroceria','Lavado','1',150),(3,'Limpieza de carburador','','1',500),(4,'Lavado de carroceria con cera','Lavado con cera','N',350);
 /*!40000 ALTER TABLE `tbl_catalogo_servicios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -110,7 +110,7 @@ CREATE TABLE `tbl_clientes` (
 
 LOCK TABLES `tbl_clientes` WRITE;
 /*!40000 ALTER TABLE `tbl_clientes` DISABLE KEYS */;
-INSERT INTO `tbl_clientes` VALUES (-1,'SIN ASIGNAR','','','','','',NULL,'','','','0','',''),(2,'Héctor G. H.','H3 SEGUROS','ABDBD1I2IE2','ESCOBEDO SUR','123','A',65789,'NUEVO LEON','8393-9990','c@H3.com','1','SALTILLO','123-34'),(3,'PABLO ESCOBAR','ABBA SEGUROS','PAB1234XYZ','CALLE','OPO','032',67888,'NUEVO SUR','23923','2323','1','CALLE',''),(4,'LAURA GARZA','AAA','LAU123','','','',0,'','','','1','',NULL),(5,'JORGE VIA','NA','JORGE123OPI','','','',0,'','','','1','MARIANO MATAMOROS','123-980');
+INSERT INTO `tbl_clientes` VALUES (-1,'SIN ASIGNAR','','','','','',NULL,'','','','0','',''),(2,'Héctor G. H.','H3 SEGUROS','ABDBD1I2IE2','ESCOBEDO SUR','123','A',65789,'NUEVO LEON','8393-9990','c@H3.com','1','SALTILLO','123-34'),(3,'PABLO ESCOBAR','ABBA SEGUROS','PAB1234XYZ','CALLE','OPO','032',67888,'NUEVO SUR','23923','2323','1','CALLE',''),(4,'LAURA GARZA','AAA','LAU123','','','',0,'','','','1','',NULL),(5,'JORGE VIA','NA','JORGE123OPI','','','',0,'','','','1','MARIANO MATAMOROS','123-980'),(6,'Prueba','AA','123','','','',0,'','','','1','','');
 /*!40000 ALTER TABLE `tbl_clientes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -137,7 +137,7 @@ CREATE TABLE `tbl_empleados` (
 
 LOCK TABLES `tbl_empleados` WRITE;
 /*!40000 ALTER TABLE `tbl_empleados` DISABLE KEYS */;
-INSERT INTO `tbl_empleados` VALUES (1,'Francisco','Guillermo','Gómez',1);
+INSERT INTO `tbl_empleados` VALUES (1,'Francisco','Guillermo','Gómez',1),(2,'Alberto','Lopez','Mendez',1);
 /*!40000 ALTER TABLE `tbl_empleados` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -203,7 +203,7 @@ CREATE TABLE `tbl_orden_trabajo` (
 
 LOCK TABLES `tbl_orden_trabajo` WRITE;
 /*!40000 ALTER TABLE `tbl_orden_trabajo` DISABLE KEYS */;
-INSERT INTO `tbl_orden_trabajo` VALUES (2,'F',2,2,'2008-07-04 12:23:00','A',NULL,1,1);
+INSERT INTO `tbl_orden_trabajo` VALUES (2,'F',6,2,'2018-02-13 00:00:00','F','2018-04-24 00:00:00',1,1),(3,NULL,5,7,'2018-04-23 00:00:00','N',NULL,1,2),(4,NULL,3,4,'2018-04-23 00:00:00','N',NULL,1,1),(5,NULL,2,3,'2018-04-10 00:00:00','N',NULL,1,2);
 /*!40000 ALTER TABLE `tbl_orden_trabajo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -232,6 +232,7 @@ CREATE TABLE `tbl_orden_trabajo_detalle` (
 
 LOCK TABLES `tbl_orden_trabajo_detalle` WRITE;
 /*!40000 ALTER TABLE `tbl_orden_trabajo_detalle` DISABLE KEYS */;
+INSERT INTO `tbl_orden_trabajo_detalle` VALUES (2,2,3),(3,2,1),(4,2,4),(5,4,2),(6,5,1),(7,5,2);
 /*!40000 ALTER TABLE `tbl_orden_trabajo_detalle` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -475,6 +476,78 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `agregar_modificar_empleado` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = latin1 */ ;
+/*!50003 SET character_set_results = latin1 */ ;
+/*!50003 SET collation_connection  = latin1_swedish_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `agregar_modificar_empleado`(INOUT p_id_empleado  INT,
+                                             IN p_nombre  VARCHAR(75),
+                                             IN p_ap_pat  VARCHAR(100),
+                                             IN p_ap_mat  VARCHAR(100),
+                                             IN p_habilitado  INT)
+BEGIN
+
+DECLARE p_existe  INT;
+DECLARE p_max_id	int;
+
+IF p_id_empleado = 0 THEN
+    SELECT COALESCE(MAX(id_empleado),1) into p_max_id from tbl_empleados;
+    SET p_max_id = p_max_id + 1;  
+    
+    INSERT INTO tbl_empleados
+    (
+      id_empleado,
+      nombre,
+      ap_pat,
+      ap_mat,
+      habilitado
+    )VALUES
+    (
+      p_max_id,
+      p_nombre,
+      p_ap_pat,
+      p_ap_mat,
+      p_habilitado
+    );
+    
+    SET p_id_empleado = p_max_id;
+    
+    Select 'Registro guardado exitosamente' as mensaje, 0 as error, p_max_id as p_id_empleado  from dual;
+
+
+ELSEIF p_id_empleado > 0 THEN
+  
+    SELECT COUNT(*) INTO p_existe
+    FROM tbl_empleados WHERE id_empleado = p_id_empleado;
+    
+    IF p_existe > 0 THEN   
+    
+    UPDATE tbl_empleados SET NOMBRE = p_nombre
+    ,AP_PAT = p_ap_pat
+    ,AP_MAT = p_ap_mat
+    ,HABILITADO = p_habilitado
+    WHERE id_empleado = p_id_empleado;
+    
+    Select 'Registro actualizado exitosamente' as mensaje, 0 as error, 1 as actualizado  from dual;
+    
+    ELSEIF p_existe = 0 THEN
+      Select 'El registro no existe para actualizar, verificar que el id exista en la tabla' as mensaje, 1 as error, p_max_id as p_id_empleado  from dual;
+    END IF;
+    
+END IF;    
+	
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `agregar_modificar_orden_trabajo` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -562,6 +635,168 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `agregar_modificar_servicios` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = latin1 */ ;
+/*!50003 SET character_set_results = latin1 */ ;
+/*!50003 SET collation_connection  = latin1_swedish_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `agregar_modificar_servicios`(INOUT p_id_catalogo INT,
+                                              IN p_nombre VARCHAR(45),
+                                              IN p_detalle VARCHAR(45),
+                                              IN p_activo VARCHAR(1),
+                                              IN p_precio DOUBLE)
+BEGIN
+
+
+DECLARE p_existe  INT;
+DECLARE p_max_id	int;
+
+
+IF p_id_catalogo = 0 THEN
+    SELECT COALESCE(MAX(id_catalogo_servicios),1) into p_max_id from tbl_catalogo_servicios;
+    SET p_max_id = p_max_id + 1;  
+    
+    INSERT INTO tbl_catalogo_servicios
+    (
+      id_catalogo_servicios,
+      nombre,
+      detalle,
+      activo,
+      precio
+    )VALUES
+    (
+      p_max_id,
+      p_nombre,
+      p_detalle,
+      p_activo,
+      p_precio
+    );
+    
+    SET p_id_catalogo = p_max_id;
+    
+    Select 'Registro guardado exitosamente' as mensaje, 0 as error, p_max_id as p_id_catalogo from dual;
+
+
+ELSEIF p_id_catalogo > 0 THEN
+  
+    SELECT COUNT(*) INTO p_existe
+    FROM tbl_catalogo_servicios WHERE id_catalogo_servicios = p_id_catalogo;
+    
+    IF p_existe > 0 THEN   
+    
+    UPDATE tbl_catalogo_servicios SET NOMBRE = p_nombre
+    ,detalle = p_detalle
+    ,activo = p_activo
+    ,precio = p_precio
+    WHERE id_catalogo_servicios = p_id_catalogo;
+    
+    Select 'Registro actualizado exitosamente' as mensaje, 0 as error, 1 as actualizado  from dual;
+    
+    ELSEIF p_existe = 0 THEN
+      Select 'El registro no existe para actualizar, verificar que el id exista en la tabla' as mensaje, 1 as error, p_max_id as p_id_catalogo  from dual;
+    END IF;
+    
+    END IF;
+	
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `agregar_orden_trabajo_detalle` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = latin1 */ ;
+/*!50003 SET character_set_results = latin1 */ ;
+/*!50003 SET collation_connection  = latin1_swedish_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `agregar_orden_trabajo_detalle`(INOUT  p_id_orden_trabajo_detalle INT,
+                                                IN  p_orden_trabajo INT,
+                                                in  p_id_catalogo_servicio  INT)
+BEGIN
+
+DECLARE p_existe  INT;
+DECLARE p_max_id	int;
+
+IF p_id_orden_trabajo_detalle = 0 THEN
+    SELECT COALESCE(MAX(id_orden_trabajo_detalle),1) into p_max_id from tbl_orden_trabajo_detalle;
+    SET p_max_id = p_max_id + 1;  
+    
+    INSERT INTO tbl_orden_trabajo_detalle
+    (
+      id_orden_trabajo_detalle,
+      id_orden_trabajo,
+      id_catalogo_servicios
+    )VALUES
+    (
+      p_max_id,
+      p_orden_trabajo,
+      p_id_catalogo_servicio
+    );
+    
+    SET p_id_orden_trabajo_detalle = p_max_id;
+    
+    Select 'Registro guardado exitosamente' as mensaje, 0 as error, p_max_id as p_id_orden_trabajo_detalle from dual;
+
+
+ELSEIF p_id_orden_trabajo_detalle > 0 THEN
+  
+    SELECT COUNT(*) INTO p_existe
+    FROM tbl_orden_trabajo_detalle WHERE id_orden_trabajo_detalle = p_id_orden_trabajo_detalle;
+    
+    IF p_existe > 0 THEN   
+    
+    UPDATE tbl_orden_trabajo_detalle SET id_orden_trabajo = p_orden_trabajo
+    ,id_catalogo_servicios = p_id_catalogo_servicio
+    WHERE id_orden_trabajo_detalle = p_id_orden_trabajo_detalle;
+    
+    Select 'Registro actualizado exitosamente' as mensaje, 0 as error, 1 as actualizado  from dual;
+    
+    ELSEIF p_existe = 0 THEN
+      Select 'El registro no existe para actualizar, verificar que el id exista en la tabla' as mensaje, 1 as error, p_max_id as p_id_orden_trabajo_detalle  from dual;
+    END IF;
+    
+    END IF;
+	
+	
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `eliminar_detalle_servicio` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = latin1 */ ;
+/*!50003 SET character_set_results = latin1 */ ;
+/*!50003 SET collation_connection  = latin1_swedish_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `eliminar_detalle_servicio`(IN p_id_detalle_servicio INT)
+BEGIN
+
+delete from tbl_orden_trabajo_detalle where id_orden_trabajo_detalle = p_id_detalle_servicio ;
+
+select 'Registro eliminado' as mensaje, 0 as has_error, 1 as eliminado;
+	
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `obtener_autos_from_cliente` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -642,6 +877,35 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `obtener_empleado_by_id` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = latin1 */ ;
+/*!50003 SET character_set_results = latin1 */ ;
+/*!50003 SET collation_connection  = latin1_swedish_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `obtener_empleado_by_id`(p_id INT)
+BEGIN
+
+IF p_id = -2 THEN
+
+SELECT * FROM tbl_empleados where id_empleado <> -1;
+
+ELSE
+
+SELECT * FROM tbl_empleados where id_empleado = p_id and habilitado = 1;
+
+END IF;
+	
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `obtener_orden_trabajo_by_id` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -667,6 +931,77 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `obtener_orden_trabajo_detalle_by_id` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = latin1 */ ;
+/*!50003 SET character_set_results = latin1 */ ;
+/*!50003 SET collation_connection  = latin1_swedish_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `obtener_orden_trabajo_detalle_by_id`(IN p_id INT)
+BEGIN
+
+IF p_id = -2 THEN
+SELECT * FROM tbl_orden_trabajo_detalle where id_orden_trabajo_detalle <> -1;
+ELSE 
+SELECT * FROM tbl_orden_trabajo_detalle where id_orden_trabajo_detalle = p_id;
+END IF;
+	
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `obtener_orden_tra_det_from_orden_pri` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = latin1 */ ;
+/*!50003 SET character_set_results = latin1 */ ;
+/*!50003 SET collation_connection  = latin1_swedish_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `obtener_orden_tra_det_from_orden_pri`(IN p_id INT)
+BEGIN
+
+SELECT * from tbl_orden_trabajo_detalle where id_orden_trabajo = p_id;
+	
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `obtener_servicio_by_id` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = latin1 */ ;
+/*!50003 SET character_set_results = latin1 */ ;
+/*!50003 SET collation_connection  = latin1_swedish_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `obtener_servicio_by_id`(IN  p_in INT)
+BEGIN
+
+IF p_in = -2 THEN
+SELECT * FROM tbl_catalogo_servicios where id_catalogo_servicios <> -1;  
+ELSE
+SELECT * FROM tbl_catalogo_servicios WHERE id_catalogo_servicios = p_in;  
+END IF;
+  
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -677,4 +1012,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-22 22:26:25
+-- Dump completed on 2018-04-24 10:13:29
