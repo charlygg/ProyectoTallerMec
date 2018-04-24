@@ -7,7 +7,7 @@ package com.taller.dao;
 
 import com.mysql.jdbc.CallableStatement;
 import com.taller.bd.ConexionMySQL;
-import com.taller.modelo.Empleado;
+import com.taller.modelo.CatalogoServicio;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,25 +19,24 @@ import javax.swing.JOptionPane;
  *
  * @author Usuario
  */
-public class EmpleadoDao extends ConexionMySQL{
+public class CatalogoServicioDao extends ConexionMySQL{
     
-      
-    public Empleado obtenerEmpleadoById(int id){        
-            Empleado c = null;
+    public CatalogoServicio obtenerServicioById(int id){        
+            CatalogoServicio c = null;
         try{
             Connection cn = conectar();
-            CallableStatement call = (CallableStatement) cn.prepareCall("{call obtener_empleado_by_id(?)}");
+            CallableStatement call = (CallableStatement) cn.prepareCall("{call obtener_servicio_by_id(?)}");
             call.setInt(1, id);
             
             ResultSet res = call.executeQuery();
             
             if(res.next()){
-                c = new Empleado();
-                c.setIdEmpleado(res.getInt(1));
+                c = new CatalogoServicio();
+                c.setIdCatalogoServicio(res.getInt(1));
                 c.setNombre(res.getString(2));
-                c.setApePat(res.getString(3));
-                c.setApeMat(res.getString(4));
-                c.setHabilitado(res.getInt(5));
+                c.setDetalle(res.getString(3));
+                c.setActivo(res.getString(4));
+                c.setPrecio(res.getDouble(5));
             }
             
             cn.close();
@@ -66,21 +65,20 @@ public class EmpleadoDao extends ConexionMySQL{
     }
         
         
-    public Empleado registrarEmpleado(Empleado e){
+    public CatalogoServicio registrarCatalogoServicio(CatalogoServicio c){
         try{
             Connection cn = conectar();
-            CallableStatement call = (CallableStatement) cn.prepareCall("{call agregar_modificar_empleado(?,?,?,?,?)}");
-            call.setInt(1, e.getIdEmpleado());
+            CallableStatement call = (CallableStatement) cn.prepareCall("{call agregar_modificar_servicios(?,?,?,?,?,?)}");
+            call.setInt(1, c.getIdCatalogoServicio() );
             call.registerOutParameter(1, Types.INTEGER);
-            call.setString(2, e.getNombre());
-            call.setString(3, e.getApePat());
-            call.setString(4, e.getApeMat());
-            call.setInt(5, e.getHabilitado());
-
+            call.setString(2, c.getNombre());
+            call.setString(3, c.getDetalle());
+            call.setString(4, c.getActivo());
+            call.setDouble(5, c.getPrecio());
             ResultSet res = call.executeQuery();
             
             if(res.next()){               
-                e.setIdEmpleado(res.getInt(3));
+                c.setIdCatalogoServicio(res.getInt(3));
                 String mensaje = res.getString("mensaje");
                 System.out.println(mensaje);
                 JOptionPane.showMessageDialog(null, mensaje);
@@ -91,7 +89,7 @@ public class EmpleadoDao extends ConexionMySQL{
             res.close();
             call.close();
             
-            return e;
+            return c;
             
         }catch(SQLException ex){
             ex.printStackTrace();
@@ -106,21 +104,20 @@ public class EmpleadoDao extends ConexionMySQL{
                 ex.printStackTrace();                
             }
         }        
-        return e;
+        return c;
     }
     
-    public boolean actualizarEmpleado(Empleado e){
+    public boolean actualizarCatalogoServicio(CatalogoServicio c){
         try{
             int actualizado = 0;
             Connection cn = conectar();
-            CallableStatement call = (CallableStatement) cn.prepareCall("{call agregar_modificar_empleado(?,?,?,?,?)}");
-            call.setInt(1, e.getIdEmpleado());
+            CallableStatement call = (CallableStatement) cn.prepareCall("{call agregar_modificar_servicios(?,?,?,?,?,?)}");
+            call.setInt(1, c.getIdCatalogoServicio() );
             call.registerOutParameter(1, Types.INTEGER);
-            call.setString(2, e.getNombre());
-            call.setString(3, e.getApePat());
-            call.setString(4, e.getApeMat());
-            call.setInt(5, e.getHabilitado());
-
+            call.setString(2, c.getNombre());
+            call.setString(3, c.getDetalle());
+            call.setString(4, c.getActivo());
+            call.setDouble(5, c.getPrecio());
             ResultSet res = call.executeQuery();
             
             if(res.next()){    
@@ -156,31 +153,31 @@ public class EmpleadoDao extends ConexionMySQL{
         return false;
     }
     
-    public ArrayList<Empleado> obtenerAllEmpleados(){
-        ArrayList<Empleado> listaEmpleado = new ArrayList<Empleado>();
-        Empleado c = null;
+    public ArrayList<CatalogoServicio> obtenerAllServicios(){
+        ArrayList<CatalogoServicio> listaCatalogoServicio = new ArrayList<CatalogoServicio>();
+        CatalogoServicio c = null;
         try{
             Connection cn = conectar();
-            CallableStatement call = (CallableStatement) cn.prepareCall("{call obtener_empleado_by_id(?)}");
+            CallableStatement call = (CallableStatement) cn.prepareCall("{call obtener_servicio_by_id(?)}");
             call.setInt(1, -2);
             
             ResultSet res = call.executeQuery();
             
             while(res.next()){
-                c = new Empleado();
-                c.setIdEmpleado(res.getInt(1));
+                c = new CatalogoServicio();
+                c.setIdCatalogoServicio(res.getInt(1));
                 c.setNombre(res.getString(2));
-                c.setApePat(res.getString(3));
-                c.setApeMat(res.getString(4));
-                c.setHabilitado(res.getInt(5));
-                listaEmpleado.add(c);
+                c.setDetalle(res.getString(3));
+                c.setActivo(res.getString(4));
+                c.setPrecio(res.getDouble(5)); 
+                listaCatalogoServicio.add(c);
             }
             
             cn.close();
             res.close();
             call.close();
             
-            return listaEmpleado;
+            return listaCatalogoServicio;
             
         }catch(SQLException ex){
             ex.printStackTrace();
@@ -200,5 +197,6 @@ public class EmpleadoDao extends ConexionMySQL{
         }
         return null;
     }
+    
     
 }

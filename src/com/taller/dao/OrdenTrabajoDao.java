@@ -79,9 +79,17 @@ public class OrdenTrabajoDao extends ConexionMySQL{
             call.setString(2, o.getFolio());
             call.setInt(3, o.getIdCliente());
             call.setInt(4, o.getIdAuto());
-            call.setDate(5, (Date) o.getFechaRegistro());
+//            call.setDate(5, (Date) o.getFechaRegistro());
+            call.setDate(5, new java.sql.Date(o.getFechaRegistro().getTime()));
             call.setString(6, o.getEstado());
-            call.setDate(7, (Date) o.getFechaCompletado());
+//            call.setDate(7, (Date) o.getFechaCompletado());
+
+            if(o.getFechaCompletado() == null){
+                call.setDate(7, null);
+            } else {
+                call.setDate(7, new java.sql.Date(o.getFechaCompletado().getTime()));
+            }
+            
             call.setInt(8, o.getIdUsuario());            
             call.setInt(9, o.getIdEmpleadoAsignado());
 
@@ -129,9 +137,15 @@ public class OrdenTrabajoDao extends ConexionMySQL{
             call.setString(2, o.getFolio());
             call.setInt(3, o.getIdCliente());
             call.setInt(4, o.getIdAuto());
-            call.setDate(5, (Date) o.getFechaRegistro());
+            call.setDate(5, new java.sql.Date(o.getFechaRegistro().getTime()));
             call.setString(6, o.getEstado());
-            call.setDate(7, (Date) o.getFechaCompletado());
+            
+            if(o.getFechaCompletado() == null){
+                call.setDate(7, null);
+            } else {
+                call.setDate(7, new java.sql.Date(o.getFechaCompletado().getTime()));
+            }
+            
             call.setInt(8, o.getIdUsuario());            
             call.setInt(9, o.getIdEmpleadoAsignado());
 
