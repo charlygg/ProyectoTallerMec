@@ -5,7 +5,13 @@
  */
 package com.taller.vista;
 
+import com.taller.dao.CatalogoServicioDao;
+import com.taller.dao.OrdenTrabajoDetalleDao;
 import com.taller.modelo.CatalogoServicio;
+import com.taller.modelo.OrdenTrabajoDetalle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,9 +24,53 @@ public class frmCatalogoServicios extends javax.swing.JFrame {
      */
     public frmCatalogoServicios() {
         initComponents();
+        txtServicioId.setVisible(false);
     }
     
+    
+    private int estadoRegistro = 0;
+    private CatalogoServicio catalogoActual = null;
+    
+    
+    private void limpiarCampos() {
+        txtServicio.setText("");
+        txtDescripcion.setText("");
+        txtPrecio.setText("");
+        txtServicioId.setText("");
+    }
+    
+    private void habilitarCampos(){
+        txtServicio.setEnabled(true);
+        txtDescripcion.setEnabled(true);
+        txtPrecio.setEnabled(true);
+        txtServicioId.setEnabled(true);
+        chHabilitado.setEnabled(true);
+    }
+    
+    private void deshabilitarCampos(){
+        txtServicio.setEnabled(false);
+        txtDescripcion.setEnabled(false);
+        txtPrecio.setEnabled(false);
+        txtServicioId.setEnabled(false);
+        chHabilitado.setEnabled(false);
+    }  
+    
     private void buscarServicio(){
+        CatalogoServicio c = new CatalogoServicio();
+        CatalogoServicioDao cCat = new CatalogoServicioDao();
+        
+        c = cCat.obtenerServicioById(Integer.parseInt(txtBuscar.getText()));
+        
+        if (c != null){
+            txtServicio.setText(c.getNombre());
+            txtDescripcion.setText(c.getDetalle());
+            txtPrecio.setText(c.getPrecio()+"");
+            txtServicioId.setText(c.getIdCatalogoServicio()+"");           
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Servicio no encontrado");
+            catalogoActual = null;
+            limpiarCampos();
+        }
         
     }
 
@@ -37,19 +87,20 @@ public class frmCatalogoServicios extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
         btnListado = new javax.swing.JButton();
-        btnBuscar1 = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         btnNuevo = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        txtNombre = new javax.swing.JTextField();
+        txtServicio = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        txtApePaterno = new javax.swing.JTextField();
+        txtDescripcion = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        txtApeMaterno = new javax.swing.JTextField();
+        txtPrecio = new javax.swing.JTextField();
         chHabilitado = new javax.swing.JCheckBox();
+        txtServicioId = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -70,12 +121,12 @@ public class frmCatalogoServicios extends javax.swing.JFrame {
             }
         });
 
-        btnBuscar1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnBuscar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/taller/img/search.png"))); // NOI18N
-        btnBuscar1.setText("Buscar");
-        btnBuscar1.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/taller/img/search.png"))); // NOI18N
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscar1ActionPerformed(evt);
+                btnBuscarActionPerformed(evt);
             }
         });
 
@@ -121,7 +172,7 @@ public class frmCatalogoServicios extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnBuscar1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnListado, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -146,7 +197,7 @@ public class frmCatalogoServicios extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                             .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnBuscar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnListado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -163,23 +214,27 @@ public class frmCatalogoServicios extends javax.swing.JFrame {
         jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel6.setText("Servicio");
+        jLabel6.setText("Servicio*");
 
-        txtNombre.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtServicio.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtServicio.setEnabled(false);
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel7.setText("Descripcion");
 
-        txtApePaterno.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtDescripcion.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtDescripcion.setEnabled(false);
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel8.setText("Precio");
+        jLabel8.setText("Precio*");
 
-        txtApeMaterno.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtPrecio.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtPrecio.setEnabled(false);
 
         chHabilitado.setBackground(new java.awt.Color(255, 255, 255));
         chHabilitado.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         chHabilitado.setText("Habilitado");
+        chHabilitado.setEnabled(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -198,9 +253,9 @@ public class frmCatalogoServicios extends javax.swing.JFrame {
                             .addComponent(jLabel6))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtApeMaterno, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtApePaterno, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtPrecio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtDescripcion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtServicio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(34, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -209,41 +264,52 @@ public class frmCatalogoServicios extends javax.swing.JFrame {
                 .addContainerGap(27, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtServicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtApePaterno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtApeMaterno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(chHabilitado)
                 .addGap(11, 11, 11))
         );
+
+        txtServicioId.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtServicioId.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(txtServicioId, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(22, 22, 22))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(61, 61, 61)
+                        .addComponent(txtServicioId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         pack();
@@ -251,33 +317,31 @@ public class frmCatalogoServicios extends javax.swing.JFrame {
 
     private void btnListadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListadoActionPerformed
         // TODO add your handling code here:
-        //
-        //        diagRegistroClientesLista l = new diagRegistroClientesLista(this, true);
-        //        l.btnSeleccionar.addActionListener(new ActionListener() {
-            //            @Override
-            //            public void actionPerformed(ActionEvent e) {
-                //                System.out.println("Cliente Seleccionado: " + l.obtenerClienteSeleccionado());
-                //                if (l.obtenerClienteSeleccionado() == 0){
-                    //                    JOptionPane.showMessageDialog(getParent(),
-                        //                        "No se ha seleccionado ningun automovil de la lista",
-                        //                        "Registro de Clientes",
-                        //                        JOptionPane.WARNING_MESSAGE);
-                    //                } else {
-                    //                    txtBuscar.setText(l.obtenerClienteSeleccionado()+"");
-                    //                    buscarCliente();
-                    //                    l.dispose();
-                    //                }
-                //            }
-            //        });
-    //
-    //        l.setVisible(true);
+            diagRegistroCatalogoServicioLista l = new diagRegistroCatalogoServicioLista(this, true);                 
+            l.btnSeleccionar.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {                
+                    System.out.println("Id Servicio Seleccionado: " + l.obtenerServicioSeleccionado());
+                    if (l.obtenerServicioSeleccionado() == 0){
+                        JOptionPane.showMessageDialog(getParent(),
+                                    "No se ha seleccionado ningun servicio de la lista",
+                                    "Orden de Servicio",
+                                    JOptionPane.WARNING_MESSAGE);
+                    } else {
+                        txtBuscar.setText(l.obtenerServicioSeleccionado()+"");
+                        buscarServicio();
+                        l.dispose();
+                    }
+                }
+            });
+
+            l.setVisible(true);  
     }//GEN-LAST:event_btnListadoActionPerformed
 
-    private void btnBuscar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscar1ActionPerformed
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
 
                 buscarServicio();
-                CatalogoServicio a = new CatalogoServicio();
 //                CatalogoServicioDao aDao = new CatalogoServicioDao();
 //                a = aDao.obtenerAutomovilById(Integer.parseInt(txtBuscar.getText()));
 //        
@@ -293,44 +357,44 @@ public class frmCatalogoServicios extends javax.swing.JFrame {
 //                        autoActual = null;
 //                        limpiarCampos();
 //                    }
-    }//GEN-LAST:event_btnBuscar1ActionPerformed
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // TODO add your handling code here:
         /* Si esta en modo nuevo cambia a modo edición (1) de lo contrario de modo edición cambia a modo nuevo (0)*/
-        //        if (estadoRegistro == 0) {
-            //            estadoRegistro = 1;
-            //        } else{
-            //            estadoRegistro = 0;
-            //        }
-        //
-        //        if (estadoRegistro == 1 ){
-            //            habilitarCampos();
-            //            limpiarCampos();
-            //            txtBuscar.setEnabled(false);
-            //            txtBuscar.setText("");
-            //            btnEditar.setEnabled(false);
-            //            btnGuardar.setEnabled(true);
-            //            btnNuevo.setText("Cancelar");
-            //            btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/taller/img/cancelar.png"))); // NOI18N
-            //            clienteActual = null;
-            //        } else if (estadoRegistro == 3 ) {
-            //            habilitarCampos();
-            //            txtBuscar.setEnabled(true);
-            //            btnEditar.setEnabled(true);
-            //            btnGuardar.setEnabled(false);
-            //            btnNuevo.setText("Nuevo");
-            //            btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/taller/img/nuevo.png"))); // NOI18N
-            //        } else {
-            //            deshabilitarCampos();
-            //            txtBuscar.setEnabled(true);
-            //            //txtBuscar.setText("");
-            //            btnEditar.setEnabled(true);
-            //            btnGuardar.setEnabled(false);
-            //            btnNuevo.setText("Nuevo");
-            //            btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/taller/img/nuevo.png"))); // NOI18N
-            //            estadoRegistro = 0;
-            //        }
+                if (estadoRegistro == 0) {
+                        estadoRegistro = 1;
+                    } else{
+                        estadoRegistro = 0;
+                    }
+        
+                if (estadoRegistro == 1 ){
+                        habilitarCampos();
+                        limpiarCampos();
+                        txtBuscar.setEnabled(false);
+                        txtBuscar.setText("");
+                        btnEditar.setEnabled(false);
+                        btnGuardar.setEnabled(true);
+                        btnNuevo.setText("Cancelar");
+                        btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/taller/img/cancelar.png"))); // NOI18N
+//                        clienteActual = null;
+                    } else if (estadoRegistro == 3 ) {
+                        habilitarCampos();
+                        txtBuscar.setEnabled(true);
+                        btnEditar.setEnabled(true);
+                        btnGuardar.setEnabled(false);
+                        btnNuevo.setText("Nuevo");
+                        btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/taller/img/nuevo.png"))); // NOI18N
+                    } else {
+                        deshabilitarCampos();
+                        txtBuscar.setEnabled(true);
+                        //txtBuscar.setText("");
+                        btnEditar.setEnabled(true);
+                        btnGuardar.setEnabled(false);
+                        btnNuevo.setText("Nuevo");
+                        btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/taller/img/nuevo.png"))); // NOI18N
+                        estadoRegistro = 0;
+                    }
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
@@ -339,129 +403,118 @@ public class frmCatalogoServicios extends javax.swing.JFrame {
         //Verificar si el registro existe en BD antes de poder editar,
         //de lo contrario se da de alta uno nuevo
 
-        //        if(clienteActual == null ) {
-            //            JOptionPane.showMessageDialog(getParent(), "No se puede actualizar un auto que no existe");
-            //        } else {
-            //
-            //            if(clienteActual.getIdCliente() == 0){
-                //                JOptionPane.showMessageDialog(getParent(), "No se puede actualizar un auto que no existe");
-                //            } else {
-                //
-                //                if (estadoRegistro == 0) {
-                    //                    estadoRegistro = 3;
-                    //                } else{
-                    //                    estadoRegistro = 0;
-                    //                }
-                //
-                //                if (estadoRegistro == 3 ){
-                    //                    habilitarCampos();
-                    //                    txtBuscar.setEnabled(false);
-                    //                    btnEditar.setEnabled(false);
-                    //                    btnGuardar.setEnabled(true);
-                    //                    btnNuevo.setText("Cancelar");
-                    //                } else {
-                    //                    /* deshabilitarCampos();
-                    //                    txtBuscar.setEnabled(true);
-                    //                    txtBuscar.setText("");
-                    //                    btnEditar.setEnabled(true);
-                    //                    btnGuardar.setEnabled(false);
-                    //                    btnNuevo.setText("Nuevo");*/
-                    //                }
-                //            }
-            //        }
+                if(catalogoActual == null ) {
+                        JOptionPane.showMessageDialog(getParent(), "No se puede actualizar un catalogo que no existe");
+                    } else {
+            
+                        if(catalogoActual.getIdCatalogoServicio()== 0){
+                                JOptionPane.showMessageDialog(getParent(), "No se puede actualizar un catalogo que no existe");
+                            } else {
+                
+                                if (estadoRegistro == 0) {
+                                        estadoRegistro = 3;
+                                    } else{
+                                        estadoRegistro = 0;
+                                    }
+                
+                                if (estadoRegistro == 3 ){
+                                        habilitarCampos();
+                                        txtBuscar.setEnabled(false);
+                                        btnEditar.setEnabled(false);
+                                        btnGuardar.setEnabled(true);
+                                        btnNuevo.setText("Cancelar");
+                                    } else {
+                                        /* deshabilitarCampos();
+                                        txtBuscar.setEnabled(true);
+                                        txtBuscar.setText("");
+                                        btnEditar.setEnabled(true);
+                                        btnGuardar.setEnabled(false);
+                                        btnNuevo.setText("Nuevo");*/
+                                    }
+                            }
+                    }
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
         /* Validar que solo datos básicos estén llenos */
-        //        if ( txtCompania.getText().equals("") && txtNombre.getText().equals("") && txtRfc.getText().equals("")){
-            //            JOptionPane.showMessageDialog(getParent(),
-                //                "Se deben llenar los datos marcados en asterisco como mínimo",
-                //                "Registro de Clientes",
-                //                JOptionPane.WARNING_MESSAGE);
-            //        } else {
-            //            Cliente c = new Cliente();
-            //            if (clienteActual != null){
-                //                ClienteDao aDao = new ClienteDao();
-                //                c = clienteActual;
-                //                c.setNombreCompleto(txtNombre.getText());
-                //                c.setCompania(txtCompania.getText());
-                //                c.setRfc(txtRfc.getText());
-                //                if(chActivo.isSelected()){
-                    //                    c.setActivo("1");
-                    //                } else {
-                    //                    c.setActivo("0");
-                    //                }
-                //                c.setCalle(txtCalle.getText());
-                //                c.setNumeroExterior(txtNoExt.getText());
-                //                c.setNumeroInterior(txtNoInt.getText());
-                //                try{
-                    //                    c.setCodigoPostal(Integer.parseInt(txtCodigoPostal.getText()));
-                    //                }catch(NumberFormatException ex){
-                    //                    c.setCodigoPostal(0);
-                    //                }
-                //                c.setEstado(txtEstado.getText());
-                //                c.setTelefono(txtTelefono.getText());
-                //                c.setEmail(txtCorreo.getText());
-                //                c.setFax(txtFax.getText());
-                //                c.setCiudad(txtEstado1.getText());
-                //
-                //                if ( aDao.actualizarCliente(c)) {
-                    //                    clienteActual = c;
-                    //                    deshabilitarCampos();
-                    //                    txtBuscar.setEnabled(true);
-                    //                    btnGuardar.setEnabled(false);
-                    //                    btnNuevo.setEnabled(true);
-                    //                    btnEditar.setEnabled(true);
-                    //                    btnNuevo.setText("Nuevo");
-                    //                    estadoRegistro = 0; // Sale de modo edición
-                    //                } else{
-                    //                    JOptionPane.showMessageDialog(getParent(),
-                        //                        "Ha ocurrido un error al registrar el cliente",
-                        //                        "Registro de Clientes",
-                        //                        JOptionPane.WARNING_MESSAGE);
-                    //                }
-                //            } else{
-                //                c.setIdCliente(0);
-                //                ClienteDao aDao = new ClienteDao();
-                //                c.setNombreCompleto(txtNombre.getText());
-                //                c.setCompania(txtCompania.getText());
-                //                c.setRfc(txtRfc.getText());
-                //                if(chActivo.isSelected()){
-                    //                    c.setActivo("1");
-                    //                } else {
-                    //                    c.setActivo("0");
-                    //                }
-                //                c.setCalle(txtCalle.getText());
-                //                c.setNumeroExterior(txtNoExt.getText());
-                //                c.setNumeroInterior(txtNoInt.getText());
-                //                try{
-                    //                    c.setCodigoPostal(Integer.parseInt(txtCodigoPostal.getText()));
-                    //                }catch(NumberFormatException ex){
-                    //                    c.setCodigoPostal(0);
-                    //                }
-                //                c.setEstado(txtEstado.getText());
-                //                c.setTelefono(txtTelefono.getText());
-                //                c.setEmail(txtCorreo.getText());
-                //                c.setFax(txtFax.getText());
-                //                c.setCiudad(txtEstado1.getText());
-                //                c = aDao.registrarCliente(c);
-                //
-                //                if (  c.getIdCliente() != 0){
-                    //                    clienteActual = c;
-                    //                    deshabilitarCampos();
-                    //                    txtBuscar.setEnabled(true);
-                    //                    btnGuardar.setEnabled(false);
-                    //                    btnNuevo.setEnabled(true);
-                    //                    btnEditar.setEnabled(true);
-                    //                    btnNuevo.setText("Nuevo");
-                    //                    estadoRegistro = 0; // Sale de modo edición
-                    //                } else{
-                    //
-                    //                }
-                //            }
-            //
-            //        }
+                if ( txtPrecio.getText().equals("") && txtServicio.getText().equals("")){
+                        JOptionPane.showMessageDialog(getParent(),
+                                "Se deben llenar los datos marcados en asterisco como mínimo",
+                                "Registro de Clientes",
+                                JOptionPane.WARNING_MESSAGE);
+                    } else {
+                        CatalogoServicio c = new CatalogoServicio();                        
+                        if (catalogoActual != null){
+                                CatalogoServicioDao cDao = new CatalogoServicioDao();                                
+                                c = catalogoActual; 
+                                
+                                c.setNombre(txtServicio.getText());
+                                c.setDetalle(txtDescripcion.getText());
+                                try{
+                                    c.setPrecio(Double.parseDouble(txtPrecio.getText()));
+                                }catch(Exception ex){
+                                    c.setPrecio(0);
+;
+                                }
+                                
+                                if(chHabilitado.isSelected()){
+                                    c.setActivo("1");
+                                } else {
+                                    c.setActivo("0");
+                                }
+                                
+                                
+                                if ( cDao.actualizarCatalogoServicio(c)) {
+                                        catalogoActual = c;
+                                        deshabilitarCampos();
+                                        txtBuscar.setEnabled(true);
+                                        btnGuardar.setEnabled(false);
+                                        btnNuevo.setEnabled(true);
+                                        btnEditar.setEnabled(true);
+                                        btnNuevo.setText("Nuevo");
+                                        estadoRegistro = 0; // Sale de modo edición
+                                    } else{
+                                        JOptionPane.showMessageDialog(getParent(),
+                                                "Ha ocurrido un error al registrar el cliente",
+                                                "Registro de Clientes",
+                                                JOptionPane.WARNING_MESSAGE);
+                                    }
+                            } else{
+                            CatalogoServicioDao cDao = new CatalogoServicioDao();  
+                                c.setIdCatalogoServicio(0);
+                                c.setNombre(txtServicio.getText());
+                                c.setDetalle(txtDescripcion.getText());
+                                try{
+                                    c.setPrecio(Double.parseDouble(txtPrecio.getText()));
+                                }catch(Exception ex){
+                                    c.setPrecio(0);
+                                    ex.printStackTrace();;
+                                }
+                                
+                                if(chHabilitado.isSelected()){
+                                    c.setActivo("1");
+                                } else {
+                                    c.setActivo("0");
+                                }
+                                
+                                c = cDao.registrarCatalogoServicio(c);
+                
+                                if (  c.getIdCatalogoServicio()!= 0){
+                                        catalogoActual = c;
+                                        deshabilitarCampos();
+                                        txtBuscar.setEnabled(true);
+                                        btnGuardar.setEnabled(false);
+                                        btnNuevo.setEnabled(true);
+                                        btnEditar.setEnabled(true);
+                                        btnNuevo.setText("Nuevo");
+                                        estadoRegistro = 0; // Sale de modo edición
+                                    } else{
+                    
+                                    }
+                            }
+            
+                    }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     /**
@@ -500,7 +553,7 @@ public class frmCatalogoServicios extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBuscar1;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnListado;
@@ -513,9 +566,10 @@ public class frmCatalogoServicios extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField txtApeMaterno;
-    private javax.swing.JTextField txtApePaterno;
     private javax.swing.JTextField txtBuscar;
-    private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtDescripcion;
+    private javax.swing.JTextField txtPrecio;
+    private javax.swing.JTextField txtServicio;
+    private javax.swing.JTextField txtServicioId;
     // End of variables declaration//GEN-END:variables
 }

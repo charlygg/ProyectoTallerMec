@@ -90,8 +90,8 @@ public class frmTallerMecanico extends javax.swing.JFrame {
         });
 
         btnUsuarios.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        btnUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/taller/img/z_admin.png"))); // NOI18N
-        btnUsuarios.setText("USUARIOS");
+        btnUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/taller/img/service.png"))); // NOI18N
+        btnUsuarios.setText("SERVICIOS");
         btnUsuarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnUsuariosActionPerformed(evt);
@@ -173,7 +173,7 @@ public class frmTallerMecanico extends javax.swing.JFrame {
 
     private void btnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuariosActionPerformed
         // TODO add your handling code here:
-        frmUsuario u = new frmUsuario();
+        frmCatalogoServicios u = new frmCatalogoServicios();
         u.setVisible(true);
     }//GEN-LAST:event_btnUsuariosActionPerformed
 

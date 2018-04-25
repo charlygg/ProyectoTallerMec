@@ -27,6 +27,7 @@ public class diagRegistroCatalogoServicioLista extends javax.swing.JDialog {
     DefaultTableModel tableModel;
     frmGestionClientes frm;
     frmOrdenTrabajo frmO;
+    frmCatalogoServicios frCatServ;
     
     public int obtenerServicioSeleccionado(){
         int fila = tableAutos.getSelectedRow();  
@@ -51,6 +52,8 @@ public class diagRegistroCatalogoServicioLista extends javax.swing.JDialog {
             frmO =  (frmOrdenTrabajo) parent;
         } else if(parent instanceof frmGestionClientes){
             frm =  (frmGestionClientes) parent;
+        } else if (parent instanceof frmCatalogoServicios){
+            frCatServ = (frmCatalogoServicios) parent;
         }
         
         for(CatalogoServicio cat : listadoCatalogoServicio){
@@ -105,11 +108,6 @@ public class diagRegistroCatalogoServicioLista extends javax.swing.JDialog {
 
         btnCerrar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnCerrar.setText("Cerrar");
-        btnCerrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCerrarActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -141,11 +139,6 @@ public class diagRegistroCatalogoServicioLista extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
-        // TODO add your handling code here:
-        this.dispose();
-    }//GEN-LAST:event_btnCerrarActionPerformed
 
     /**
      * @param args the command line arguments

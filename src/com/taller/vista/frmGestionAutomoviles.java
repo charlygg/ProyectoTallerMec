@@ -414,6 +414,7 @@ public class frmGestionAutomoviles extends javax.swing.JFrame {
                 AutomovilDao aDao = new AutomovilDao();
                 a.setColor(txtColor.getText());
                 a.setMarca(txtMarca.getText());
+                a.setSerie(txtSerie.getText());
                 a.setModelo(txtModelo.getText());
                 a.setPlacas(txtPlacas.getText());
                 a.setLinea(txtLinea.getText());                
@@ -456,7 +457,8 @@ public class frmGestionAutomoviles extends javax.swing.JFrame {
                 a.setMarca(txtMarca.getText());
                 a.setModelo(txtModelo.getText());
                 a.setPlacas(txtPlacas.getText());
-                a.setLinea(txtLinea.getText());                
+                a.setLinea(txtLinea.getText());   
+                a.setSerie(txtSerie.getText());
                 try{
                     a.setAnio(Integer.parseInt(txtAnio.getText()));
                 }catch(Exception ex){

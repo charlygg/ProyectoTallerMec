@@ -68,7 +68,7 @@ public class CatalogoServicioDao extends ConexionMySQL{
     public CatalogoServicio registrarCatalogoServicio(CatalogoServicio c){
         try{
             Connection cn = conectar();
-            CallableStatement call = (CallableStatement) cn.prepareCall("{call agregar_modificar_servicios(?,?,?,?,?,?)}");
+            CallableStatement call = (CallableStatement) cn.prepareCall("{call agregar_modificar_servicios(?,?,?,?,?)}");
             call.setInt(1, c.getIdCatalogoServicio() );
             call.registerOutParameter(1, Types.INTEGER);
             call.setString(2, c.getNombre());
